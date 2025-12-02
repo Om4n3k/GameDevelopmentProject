@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "ShaderProgram.h"
+#include "render/Material.h"
 
 namespace eng {
     std::shared_ptr<ShaderProgram> GraphicsApi::CreateShaderProgram(const std::string &vertexSource, const std::string &fragmentSource) {
@@ -55,7 +56,33 @@ namespace eng {
         return std::make_shared<ShaderProgram>(shaderProgramId);
     }
 
+    GLuint GraphicsApi::CreateVertexBuffer(const std::vector<float> &vertices) {
+        GLuint VBO = 0;
+        glGenBuffers(1, &VBO);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), GL_STATIC_DRAW);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        return VBO;
+    }
+
+    GLuint GraphicsApi::CreateIndexBuffer(const std::vector<uint32_t> &indices) {
+        GLuint EBO = 0;
+        glGenBuffers(1, &EBO);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint32_t), indices.data(), GL_STATIC_DRAW);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        return EBO;
+    }
+
     void GraphicsApi::BindShaderProgram(ShaderProgram *shaderProgram) {
-        shaderProgram->Bind();
+        if (shaderProgram) {
+            shaderProgram->Bind();
+        }
+    }
+
+    void GraphicsApi::BindMaterial(Material *material) {
+        if (material) {
+            material->Bind();
+        }
     }
 }

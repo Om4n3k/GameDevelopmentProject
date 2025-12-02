@@ -8,3 +8,6 @@
 #include "input/InputManager.h"
 #include "graphics/ShaderProgram.h"
 #include "graphics/GraphicsApi.h"
+#include "graphics/VertexLayout.h"
+#include "render/Material.h"
+#include "render/Mesh.h"
