@@ -14,9 +14,11 @@ bool Game::Init() {
 
         out vec3 vColor;
 
+        uniform vec2 uOffset;
+
         void main() {
             vColor = aColor;
-            gl_Position = vec4(aPos, 1.0);
+            gl_Position = vec4(aPos.x + uOffset.x, aPos.y + uOffset.y, aPos.z, 1.0);
         }
     )";
 
@@ -75,8 +77,19 @@ void Game::Update(const float deltaTime) {
     auto& input = eng::Engine::GetInstance().GetInputManager();
 
     if (input.IsKeyPressed(GLFW_KEY_A)) {
-        std::cout << "[A] button is pressed" << std::endl;
+        m_OffsetX -= 0.01f;
     }
+    if (input.IsKeyPressed(GLFW_KEY_D)) {
+        m_OffsetX += 0.01f;
+    }
+    if (input.IsKeyPressed(GLFW_KEY_S)) {
+        m_OffsetY -= 0.01f;
+    }
+    if (input.IsKeyPressed(GLFW_KEY_W)) {
+        m_OffsetY += 0.01f;
+    }
+
+    m_Material.SetParam("uOffset", m_OffsetX, m_OffsetY);
 
     eng::RenderCommand renderCommand;
     renderCommand.material = &m_Material;
