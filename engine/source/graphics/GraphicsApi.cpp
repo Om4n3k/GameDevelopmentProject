@@ -7,6 +7,7 @@
 
 #include "ShaderProgram.h"
 #include "render/Material.h"
+#include "render/Mesh.h"
 
 namespace eng {
     std::shared_ptr<ShaderProgram> GraphicsApi::CreateShaderProgram(const std::string &vertexSource, const std::string &fragmentSource) {
@@ -83,6 +84,18 @@ namespace eng {
     void GraphicsApi::BindMaterial(Material *material) {
         if (material) {
             material->Bind();
+        }
+    }
+
+    void GraphicsApi::BindMesh(Mesh *mesh) {
+        if (mesh) {
+            mesh->Bind();
+        }
+    }
+
+    void GraphicsApi::DrawMesh(Mesh *mesh) {
+        if (mesh) {
+            mesh->Draw();
         }
     }
 }

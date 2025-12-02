@@ -11,6 +11,7 @@
 namespace eng {
     class Material;
     class ShaderProgram;
+    class Mesh;
     class GraphicsApi {
     public:
         std::shared_ptr<ShaderProgram> CreateShaderProgram(const std::string& vertexSource, const std::string& fragmentSource);
@@ -20,5 +21,7 @@ namespace eng {
 
         void BindShaderProgram(ShaderProgram* shaderProgram);
         void BindMaterial(Material* material);
+        void BindMesh(Mesh* mesh);
+        void DrawMesh(Mesh* mesh);
     };
 }
