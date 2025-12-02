@@ -62,7 +62,13 @@ namespace eng {
             auto now = std::chrono::high_resolution_clock::now();
             const float deltaTime = std::chrono::duration<float>(now - m_LastTimePoint).count();
             m_LastTimePoint = now;
+
             m_Application->Update(deltaTime);
+
+            m_GraphicsApi.SetClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+            m_GraphicsApi.ClearBuffers();
+
+            m_RenderQueue.Draw(m_GraphicsApi);
 
             glfwSwapBuffers(m_Window);
         }
@@ -89,7 +95,11 @@ namespace eng {
         return m_InputManager;
     }
 
-    GraphicsApi & Engine::GetGraphicsApi() {
+    GraphicsApi& Engine::GetGraphicsApi() {
         return m_GraphicsApi;
+    }
+
+    RenderQueue& Engine::GetRenderQueue() {
+        return m_RenderQueue;
     }
 }

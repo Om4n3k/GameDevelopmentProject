@@ -4,6 +4,7 @@
 
 #include "graphics/GraphicsApi.h"
 #include "input/InputManager.h"
+#include "render/RenderQueue.h"
 
 struct GLFWwindow;
 namespace eng {
@@ -26,6 +27,7 @@ namespace eng {
         Application* GetApplication() const;
         InputManager& GetInputManager();
         GraphicsApi& GetGraphicsApi();
+        RenderQueue& GetRenderQueue();
 
     private:
         std::unique_ptr<Application> m_Application;
@@ -33,5 +35,6 @@ namespace eng {
         GLFWwindow* m_Window = nullptr;
         InputManager m_InputManager;
         GraphicsApi m_GraphicsApi;
+        RenderQueue m_RenderQueue;
     };
 }

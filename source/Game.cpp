@@ -73,9 +73,17 @@ bool Game::Init() {
 
 void Game::Update(const float deltaTime) {
     auto& input = eng::Engine::GetInstance().GetInputManager();
+
     if (input.IsKeyPressed(GLFW_KEY_A)) {
         std::cout << "[A] button is pressed" << std::endl;
     }
+
+    eng::RenderCommand renderCommand;
+    renderCommand.material = &m_Material;
+    renderCommand.mesh = m_Mesh.get();
+
+    auto& renderQueue = eng::Engine::GetInstance().GetRenderQueue();
+    renderQueue.Submit(renderCommand);
 }
 
 void Game::Destroy() {
