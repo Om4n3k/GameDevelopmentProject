@@ -8,6 +8,8 @@ set(PROJECT_SOURCE_FILES
   source/main.cpp
   source/Game.cpp
   source/Game.h
+        source/TestObject.cpp
+        source/TestObject.h
 )
 # Add the application
 include_directories(source)
