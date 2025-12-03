@@ -43,8 +43,13 @@ include_directories(${CMAKE_SOURCE_DIR}/engine/thirdparty/glew/include)
 set_property(TARGET glew_s PROPERTY FOLDER GLEW)
 set_property(TARGET glew PROPERTY FOLDER GLEW)
 
+# Add glm library
+add_subdirectory(thirdparty/glm-1.0.1/glm)
+include_directories(thirdparty/glm-1.0.1)
+
 # Link all thirdparty libraries
 target_link_libraries(${PROJECT_NAME} 
     glfw 
     glew_s
+	glm
 )

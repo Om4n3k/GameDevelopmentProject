@@ -14,8 +14,6 @@ public:
 private:
     eng::Material m_Material;
     std::shared_ptr<eng::Mesh> m_Mesh;
-    float m_OffsetX = 0.0f;
-    float m_OffsetY = 0.0f;
 };
 
 #endif //GAMEDEVELOPMENTPROJECT_TESTOBJECT_H

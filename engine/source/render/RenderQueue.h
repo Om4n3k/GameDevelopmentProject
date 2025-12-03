@@ -3,6 +3,7 @@
 //
 #pragma once
 #include <vector>
+#include <glm/mat4x4.hpp>
 
 namespace eng {
     class Mesh;
@@ -12,6 +13,7 @@ namespace eng {
     struct RenderCommand {
         Mesh *mesh = nullptr;
         Material *material = nullptr;
+        glm::mat4 modelMatrix = glm::mat4(1.0f);
     };
 
     class RenderQueue {

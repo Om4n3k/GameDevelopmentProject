@@ -14,11 +14,11 @@ TestObject::TestObject() {
 
         out vec3 vColor;
 
-        uniform vec2 uOffset;
+        uniform mat4 uModel;
 
         void main() {
             vColor = aColor;
-            gl_Position = vec4(aPos.x + uOffset.x, aPos.y + uOffset.y, aPos.z, 1.0);
+            gl_Position = uModel * vec4(aPos, 1.0);
         }
     )";
 
@@ -74,26 +74,28 @@ TestObject::TestObject() {
 
 void TestObject::Update(float deltaTime) {
     GameObject::Update(deltaTime);
+    auto position = GetPosition();
     auto& input = eng::Engine::GetInstance().GetInputManager();
 
     if (input.IsKeyPressed(GLFW_KEY_A)) {
-        m_OffsetX -= 0.01f;
+        position.x -= 0.01f;
     }
     if (input.IsKeyPressed(GLFW_KEY_D)) {
-        m_OffsetX += 0.01f;
+        position.x += 0.01f;
     }
     if (input.IsKeyPressed(GLFW_KEY_S)) {
-        m_OffsetY -= 0.01f;
+        position.y -= 0.01f;
     }
     if (input.IsKeyPressed(GLFW_KEY_W)) {
-        m_OffsetY += 0.01f;
+        position.y += 0.01f;
     }
 
-    m_Material.SetParam("uOffset", m_OffsetX, m_OffsetY);
+    SetPosition(position);
 
     eng::RenderCommand renderCommand;
     renderCommand.material = &m_Material;
     renderCommand.mesh = m_Mesh.get();
+    renderCommand.modelMatrix = GetWorldTransform();
 
     auto& renderQueue = eng::Engine::GetInstance().GetRenderQueue();
     renderQueue.Submit(renderCommand);

@@ -6,6 +6,10 @@
 #include "graphics/ShaderProgram.h"
 
 namespace eng {
+    ShaderProgram * Material::GetShaderProgram() const {
+        return m_ShaderProgram.get();
+    }
+
     void Material::SetShaderProgram(const std::shared_ptr<ShaderProgram>& shaderProgram) {
         m_ShaderProgram = shaderProgram;
     }

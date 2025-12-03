@@ -4,7 +4,7 @@
 
 #include "RenderQueue.h"
 #include "graphics/GraphicsApi.h"
-#include "render/Mesh.h"
+#include "graphics/ShaderProgram.h"
 #include "render/Material.h"
 
 namespace eng {
@@ -15,6 +15,7 @@ namespace eng {
     void RenderQueue::Draw(GraphicsApi &graphicsApi) {
         for (auto& command : m_Commands) {
             graphicsApi.BindMaterial(command.material);
+            command.material->GetShaderProgram()->SetUniform("uModel", command.modelMatrix);
             graphicsApi.BindMesh(command.mesh);
             graphicsApi.DrawMesh(command.mesh);
         }
