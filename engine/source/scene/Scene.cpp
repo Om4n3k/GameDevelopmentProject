@@ -125,4 +125,12 @@ namespace eng {
         }
         return result;
     }
+
+    void Scene::SetMainCamera(GameObject *camera) {
+        m_MainCamera = camera;
+    }
+
+    GameObject * Scene::GetMainCamera() const {
+        return m_MainCamera;
+    }
 } // eng

@@ -12,10 +12,13 @@ namespace eng {
         m_Commands.push_back(command);
     }
 
-    void RenderQueue::Draw(GraphicsApi &graphicsApi) {
+    void RenderQueue::Draw(GraphicsApi &graphicsApi, const CameraData &cameraData) {
         for (auto& command : m_Commands) {
             graphicsApi.BindMaterial(command.material);
-            command.material->GetShaderProgram()->SetUniform("uModel", command.modelMatrix);
+            auto shaderProgram = command.material->GetShaderProgram();
+            shaderProgram->SetUniform("uModel", command.modelMatrix);
+            shaderProgram->SetUniform("uView", cameraData.viewMatrix);
+            shaderProgram->SetUniform("uProjection", cameraData.projectionMatrix);
             graphicsApi.BindMesh(command.mesh);
             graphicsApi.DrawMesh(command.mesh);
         }

@@ -1,6 +1,7 @@
 //
 // Created by omank on 1.12.2025.
 //
+#pragma once
 #include <eng.h>
 #include <memory>
 
@@ -10,5 +11,5 @@ public:
     void Update(float deltaTime) override;
     void Destroy() override;
 private:
-    eng::Scene m_Scene;
+    eng::Scene* m_Scene = nullptr;
 };

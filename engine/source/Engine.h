@@ -3,12 +3,16 @@
 #include <chrono>
 
 #include "graphics/GraphicsApi.h"
+#include "GLFW/glfw3.h"
 #include "input/InputManager.h"
 #include "render/RenderQueue.h"
 
-struct GLFWwindow;
 namespace eng {
+    class Scene;
     class Application;
+}
+
+namespace eng {
     class Engine {
     public:
         static Engine& GetInstance();
@@ -29,6 +33,8 @@ namespace eng {
         GraphicsApi& GetGraphicsApi();
         RenderQueue& GetRenderQueue();
 
+        void SetCurrentScene(Scene* scene);
+        Scene* GetCurrentScene() const;
     private:
         std::unique_ptr<Application> m_Application;
         std::chrono::system_clock::time_point m_LastTimePoint;
@@ -36,5 +42,6 @@ namespace eng {
         InputManager m_InputManager;
         GraphicsApi m_GraphicsApi;
         RenderQueue m_RenderQueue;
+        std::unique_ptr<Scene> m_CurrentScene;
     };
 }

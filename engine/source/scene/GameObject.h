@@ -24,6 +24,16 @@ namespace eng {
         void MarkForDestroy();
 
         void AddComponent(Component* component);
+        template<typename T, typename = std::enable_if_t<std::is_base_of_v<Component, T>>>
+        T* GetComponent() {
+            size_t typeId = Component::StaticTypeId<T>();
+            for (auto& component : m_Components) {
+                if (component->GetTypeId() == typeId) {
+                    return static_cast<T*>(component.get());
+                }
+            }
+            return nullptr;
+        }
 
         glm::vec3 GetPosition() const;
         void SetPosition(const glm::vec3& position);

@@ -26,7 +26,11 @@ namespace eng {
         }
 
         bool SetParent(GameObject* obj, GameObject* parent);
+
+        void SetMainCamera(GameObject* camera);
+        GameObject* GetMainCamera() const;
     private:
         std::vector<std::unique_ptr<GameObject>> m_GameObjects;
+        GameObject* m_MainCamera = nullptr;
     };
 } // eng

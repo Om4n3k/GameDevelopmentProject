@@ -8,6 +8,8 @@
 #include "Component.h"
 
 namespace eng {
+    size_t Component::nextId = 1;
+
     void GameObject::Update(float deltaTime) {
         for (auto & component : m_Components) {
             component->Update(deltaTime);

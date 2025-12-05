@@ -16,10 +16,15 @@ namespace eng {
         glm::mat4 modelMatrix = glm::mat4(1.0f);
     };
 
+    struct CameraData {
+        glm::mat4 viewMatrix;
+        glm::mat4 projectionMatrix;
+    };
+
     class RenderQueue {
     public:
         void Submit(const RenderCommand &command);
-        void Draw(GraphicsApi& graphicsApi);
+        void Draw(GraphicsApi& graphicsApi, const CameraData& cameraData);
 
     private:
         std::vector<RenderCommand> m_Commands;

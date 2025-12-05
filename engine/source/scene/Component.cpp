@@ -8,4 +8,8 @@ namespace eng {
     GameObject * Component::GetOwner() const {
         return m_Owner;
     }
+
+    size_t Component::GetTypeId() const {
+        return 0;
+    }
 } // eng

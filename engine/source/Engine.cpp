@@ -1,8 +1,12 @@
 #include "Engine.h"
 #include "Application.h"
-#include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <GL/glew.h>
 #include <iostream>
+
+#include "scene/Scene.h"
+#include "scene/Component.h"
+#include "scene/components/CameraComponent.h"
 
 namespace eng {
     void keyCallback(GLFWwindow* window, int key, int, int action, int) {
@@ -68,7 +72,22 @@ namespace eng {
             m_GraphicsApi.SetClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             m_GraphicsApi.ClearBuffers();
 
-            m_RenderQueue.Draw(m_GraphicsApi);
+            // Prepare camera data
+            CameraData cameraData{};
+            int width, height;
+            glfwGetWindowSize(m_Window, &width, &height);
+            float aspect = static_cast<float>(width) / static_cast<float>(height);
+            if (m_CurrentScene) {
+                if (const auto cameraObject = m_CurrentScene->GetMainCamera()) {
+                    // Logic for getting matrices
+                    if (const auto cameraComponent = cameraObject->GetComponent<CameraComponent>()) {
+                        cameraData.viewMatrix = cameraComponent->GetViewMatrix();
+                        cameraData.projectionMatrix = cameraComponent->GetProjectionMatrix(aspect);
+                    }
+                }
+            }
+
+            m_RenderQueue.Draw(m_GraphicsApi, cameraData);
 
             glfwSwapBuffers(m_Window);
         }
@@ -101,5 +120,13 @@ namespace eng {
 
     RenderQueue& Engine::GetRenderQueue() {
         return m_RenderQueue;
+    }
+
+    void Engine::SetCurrentScene(Scene *scene) {
+        m_CurrentScene = std::unique_ptr<Scene>(scene);
+    }
+
+    Scene * Engine::GetCurrentScene() const {
+        return m_CurrentScene.get();
     }
 }
