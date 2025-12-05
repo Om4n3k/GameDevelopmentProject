@@ -8,6 +8,7 @@
 #include <memory>
 #include <glm/vec3.hpp>
 #include <glm/mat4x4.hpp>
+#include "scene/Component.h"
 
 namespace eng {
     class Scene;
@@ -21,6 +22,8 @@ namespace eng {
         void SetParent(GameObject* parent);
         bool IsAlive() const;
         void MarkForDestroy();
+
+        void AddComponent(Component* component);
 
         glm::vec3 GetPosition() const;
         void SetPosition(const glm::vec3& position);
@@ -37,6 +40,7 @@ namespace eng {
         std::string m_Name;
         GameObject* m_Parent = nullptr;
         std::vector<std::unique_ptr<GameObject>> m_Children;
+        std::vector<std::unique_ptr<Component>> m_Components;
         bool m_IsAlive = true;
         glm::vec3 m_Position = glm::vec3(0.0f);
         glm::vec3 m_Rotation = glm::vec3(0.0f);

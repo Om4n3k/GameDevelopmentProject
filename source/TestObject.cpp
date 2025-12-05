@@ -63,13 +63,16 @@ TestObject::TestObject() {
     });
     vertexLayout.stride = sizeof(float) * 6;
 
-    m_Mesh = std::make_shared<eng::Mesh>(
+    auto material = std::make_shared<eng::Material>();
+    auto mesh = std::make_shared<eng::Mesh>(
         vertexLayout,
         rectVerticies,
         indicies
     );
 
-    m_Material.SetShaderProgram(shaderProgram);
+    material->SetShaderProgram(shaderProgram);
+
+    AddComponent(new eng::MeshComponent(material, mesh));
 }
 
 void TestObject::Update(float deltaTime) {
@@ -91,12 +94,4 @@ void TestObject::Update(float deltaTime) {
     }
 
     SetPosition(position);
-
-    eng::RenderCommand renderCommand;
-    renderCommand.material = &m_Material;
-    renderCommand.mesh = m_Mesh.get();
-    renderCommand.modelMatrix = GetWorldTransform();
-
-    auto& renderQueue = eng::Engine::GetInstance().GetRenderQueue();
-    renderQueue.Submit(renderCommand);
 }

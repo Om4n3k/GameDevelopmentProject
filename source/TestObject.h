@@ -12,8 +12,7 @@ public:
 
     void Update(float deltaTime) override;
 private:
-    eng::Material m_Material;
-    std::shared_ptr<eng::Mesh> m_Mesh;
+
 };
 
 #endif //GAMEDEVELOPMENTPROJECT_TESTOBJECT_H

@@ -4,8 +4,14 @@
 
 #include "GameObject.h"
 #include <glm/gtc/matrix_transform.hpp>
+
+#include "Component.h"
+
 namespace eng {
     void GameObject::Update(float deltaTime) {
+        for (auto & component : m_Components) {
+            component->Update(deltaTime);
+        }
         for (auto it = m_Children.begin(); it != m_Children.end(); ) {
             if ((*it)->IsAlive()) {
                 (*it)->Update(deltaTime);
@@ -35,6 +41,11 @@ namespace eng {
 
     void GameObject::MarkForDestroy() {
         m_IsAlive = false;
+    }
+
+    void GameObject::AddComponent(Component *component) {
+        m_Components.emplace_back(component);
+        component->m_Owner = this;
     }
 
     glm::vec3 GameObject::GetPosition() const {
