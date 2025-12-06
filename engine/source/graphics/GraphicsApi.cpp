@@ -10,6 +10,11 @@
 #include "render/Mesh.h"
 
 namespace eng {
+    bool GraphicsApi::Init() {
+        glEnable(GL_DEPTH_TEST);
+        return true;
+    }
+
     std::shared_ptr<ShaderProgram> GraphicsApi::CreateShaderProgram(const std::string &vertexSource, const std::string &fragmentSource) {
         GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
         const char* vertexShaderCStr = vertexSource.c_str();
@@ -80,7 +85,7 @@ namespace eng {
     }
 
     void GraphicsApi::ClearBuffers() {
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
     void GraphicsApi::BindShaderProgram(ShaderProgram *shaderProgram) {

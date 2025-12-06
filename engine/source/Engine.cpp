@@ -68,6 +68,8 @@ namespace eng {
             return false;
         }
 
+        m_GraphicsApi.Init();
+
         return m_Application->Init();
     }
 

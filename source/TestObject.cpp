@@ -38,16 +38,42 @@ TestObject::TestObject() {
     auto& graphicsApi = eng::Engine::GetInstance().GetGraphicsApi();
     auto shaderProgram = graphicsApi.CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
 
-    std::vector<float> rectVerticies = {
-        0.5f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // top right
-        0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom right
-       -0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,  // bottom left
-       -0.5f,  0.5f, 0.0f,  1.0f, 1.0f, 0.0f   // top left
+    std::vector<float> cubeVertices = {
+        0.5f,  0.5f, 0.5f,  1.0f, 0.0f, 0.0f,
+        0.5f, -0.5f, 0.5f,  0.0f, 1.0f, 0.0f,
+       -0.5f, -0.5f, 0.5f,  0.0f, 0.0f, 1.0f,
+       -0.5f,  0.5f, 0.5f,  1.0f, 1.0f, 0.0f,
+
+        0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
+        0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 0.0f,
+       -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
+       -0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f,
     };
 
     std::vector<unsigned int> indicies = {
+        // front face
         0, 1, 2,
-        0, 2, 3
+        0, 2, 3,
+
+        // top face
+        4, 5, 1,
+        4, 1, 0,
+
+        // right face
+        4, 0, 3,
+        4, 3, 7,
+
+        // left face
+        1, 5, 6,
+        1, 6, 2,
+
+        // bottom face
+        3, 2, 6,
+        3, 6, 7,
+
+        // back face
+        4, 7, 6,
+        4, 6, 5
     };
 
     eng::VertexLayout vertexLayout;
@@ -68,7 +94,7 @@ TestObject::TestObject() {
     auto material = std::make_shared<eng::Material>();
     auto mesh = std::make_shared<eng::Mesh>(
         vertexLayout,
-        rectVerticies,
+        cubeVertices,
         indicies
     );
 
