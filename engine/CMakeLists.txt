@@ -33,6 +33,8 @@ set(PROJECT_SOURCE_FILES
 		source/scene/components/MeshComponent.h
 		source/scene/components/CameraComponent.cpp
 		source/scene/components/CameraComponent.h
+		source/scene/components/PlayerControllerComponent.cpp
+		source/scene/components/PlayerControllerComponent.h
 )
 
 include_directories(source)

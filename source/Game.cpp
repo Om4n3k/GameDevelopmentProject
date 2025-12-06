@@ -4,12 +4,14 @@
 
 #include "Game.h"
 #include "TestObject.h"
+#include "scene/components/PlayerControllerComponent.h"
 
 bool Game::Init() {
     m_Scene = new eng::Scene();
     auto camera = m_Scene->CreateObject("Camera");
     camera->AddComponent(new eng::CameraComponent());
     camera->SetPosition(glm::vec3(0.0f, 0.0f, 2.0f));
+    camera->AddComponent(new eng::PlayerControllerComponent());
 
     m_Scene->SetMainCamera(camera);
     m_Scene->CreateObject<TestObject>("TestObject");

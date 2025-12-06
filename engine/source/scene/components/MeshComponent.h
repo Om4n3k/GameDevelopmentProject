@@ -5,8 +5,6 @@
 #ifndef GAMEDEVELOPMENTPROJECT_MESHCOMPONENT_H
 #define GAMEDEVELOPMENTPROJECT_MESHCOMPONENT_H
 #include <memory>
-
-
 #include "scene/Component.h"
 namespace eng {
     class Mesh;

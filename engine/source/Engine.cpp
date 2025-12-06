@@ -9,13 +9,27 @@
 #include "scene/components/CameraComponent.h"
 
 namespace eng {
-    void keyCallback(GLFWwindow* window, int key, int, int action, int) {
+    void keyCallback(GLFWwindow*, int key, int, int action, int) {
         auto& inputManager = Engine::GetInstance().GetInputManager();
         if (action == GLFW_PRESS) {
             inputManager.SetKeyPressed(key, true);
         } else if (action == GLFW_RELEASE) {
             inputManager.SetKeyPressed(key, false);
         }
+    }
+
+    void mouseButtonCallback(GLFWwindow*, int button, int action, int) {
+        auto& inputManager = Engine::GetInstance().GetInputManager();
+        if (action == GLFW_PRESS) {
+            inputManager.SetMouseButtonPressed(button, true);
+        } else if (action == GLFW_RELEASE) {
+            inputManager.SetMouseButtonPressed(button, false);
+        }
+    }
+
+    void mouseCursorPositionCallback(GLFWwindow*, double xpos, double ypos) {
+        auto& inputManager = Engine::GetInstance().GetInputManager();
+        inputManager.SetMousePosition(static_cast<float>(xpos), static_cast<float>(ypos));
     }
 
     Engine &Engine::GetInstance() {
@@ -42,7 +56,10 @@ namespace eng {
             return false;
         }
 
+        // Input manager callbacks
         glfwSetKeyCallback(m_Window, keyCallback);
+        glfwSetMouseButtonCallback(m_Window, mouseButtonCallback);
+        glfwSetCursorPosCallback(m_Window, mouseCursorPositionCallback);
 
         glfwMakeContextCurrent(m_Window);
 
