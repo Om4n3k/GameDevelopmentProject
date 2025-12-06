@@ -8,6 +8,8 @@
 #include <memory>
 #include <glm/vec3.hpp>
 #include <glm/mat4x4.hpp>
+
+#include "glm/ext/quaternion_float.hpp"
 #include "scene/Component.h"
 
 namespace eng {
@@ -37,8 +39,8 @@ namespace eng {
 
         glm::vec3 GetPosition() const;
         void SetPosition(const glm::vec3& position);
-        glm::vec3 GetRotation() const;
-        void SetRotation(const glm::vec3& rotation);
+        glm::quat GetRotation() const;
+        void SetRotation(const glm::quat& rotation);
         glm::vec3 GetScale() const;
         void SetScale(const glm::vec3& scale);
 
@@ -53,7 +55,7 @@ namespace eng {
         std::vector<std::unique_ptr<Component>> m_Components;
         bool m_IsAlive = true;
         glm::vec3 m_Position = glm::vec3(0.0f);
-        glm::vec3 m_Rotation = glm::vec3(0.0f);
+        glm::quat m_Rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
         glm::vec3 m_Scale = glm::vec3(1.0f);
 
         friend class Scene;

@@ -6,6 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "Component.h"
+#include "glm/gtc/quaternion.hpp"
 
 namespace eng {
     size_t Component::nextId = 1;
@@ -58,11 +59,11 @@ namespace eng {
         m_Position = position;
     }
 
-    glm::vec3 GameObject::GetRotation() const {
+    glm::quat GameObject::GetRotation() const {
         return m_Rotation;
     }
 
-    void GameObject::SetRotation(const glm::vec3 &rotation) {
+    void GameObject::SetRotation(const glm::quat &rotation) {
         m_Rotation = rotation;
     }
 
@@ -81,9 +82,7 @@ namespace eng {
         mat = glm::translate(mat, m_Position);
 
         // Rotation
-        mat = glm::rotate(mat, m_Rotation.x, glm::vec3(1, 0, 0));
-        mat = glm::rotate(mat, m_Rotation.y, glm::vec3(0, 1, 0));
-        mat = glm::rotate(mat, m_Rotation.z, glm::vec3(0, 0, 1));
+        mat = mat * glm::mat4_cast(m_Rotation);
 
         // Scale
         mat = glm::scale(mat, m_Scale);

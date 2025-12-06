@@ -12,8 +12,8 @@ namespace eng {
     public:
         void Update(float deltaTime) override;
     private:
-        float m_Sensitivity = 0.1f;
-        float m_Speed = 1.0f;
+        float m_Sensitivity = 0.5f;
+        float m_Speed = 1.5f;
     };
 } // eng
 

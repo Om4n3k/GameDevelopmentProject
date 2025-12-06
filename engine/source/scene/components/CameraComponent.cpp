@@ -5,6 +5,7 @@
 #include "CameraComponent.h"
 
 #include "glm/ext/matrix_clip_space.hpp"
+#include "glm/gtc/quaternion.hpp"
 #include "scene/GameObject.h"
 
 namespace eng {
@@ -13,7 +14,16 @@ namespace eng {
     }
 
     glm::mat4 CameraComponent::GetViewMatrix() const {
-        return glm::inverse(m_Owner->GetWorldTransform());
+        glm::mat4 mat = glm::mat4(1.0f);
+        mat = glm::mat4_cast(m_Owner->GetRotation());
+
+        mat = glm::translate(mat, m_Owner->GetPosition());
+        mat[3] = glm::vec4(m_Owner->GetPosition(), 1.0f);
+
+        if (m_Owner->GetParent()) {
+            mat = m_Owner->GetParent()->GetWorldTransform() * mat;
+        }
+        return glm::inverse(mat);
     }
 
     glm::mat4 CameraComponent::GetProjectionMatrix(float aspect) const {

@@ -108,6 +108,8 @@ namespace eng {
 
             m_RenderQueue.Draw(m_GraphicsApi, cameraData);
 
+            glm::vec2 lastMousePos = m_InputManager.GetMousePosition();
+            m_InputManager.SetMousePositionLastFrame(lastMousePos.x, lastMousePos.y);
             glfwSwapBuffers(m_Window);
         }
     }
