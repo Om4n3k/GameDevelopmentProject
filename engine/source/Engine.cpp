@@ -143,6 +143,10 @@ namespace eng {
         return m_RenderQueue;
     }
 
+    FileSystem & Engine::GetFileSystem() {
+        return m_FileSystem;
+    }
+
     void Engine::SetCurrentScene(Scene *scene) {
         m_CurrentScene = std::unique_ptr<Scene>(scene);
     }

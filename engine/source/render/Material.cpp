@@ -22,6 +22,10 @@ namespace eng {
         m_FloatTupleProperties[name] = {v0, v1};
     }
 
+    void Material::SetParam(const std::string &name, const std::shared_ptr<Texture> &texture) {
+        m_Textures[name] = texture;
+    }
+
     void Material::Bind() {
         if (!m_ShaderProgram) {
             return;
@@ -35,6 +39,10 @@ namespace eng {
 
         for (const auto& param : m_FloatTupleProperties) {
             m_ShaderProgram->SetUniform(param.first, param.second.first, param.second.second);
+        }
+
+        for (const auto& texture : m_Textures) {
+            m_ShaderProgram->SetTexture(texture.first, texture.second.get());
         }
     }
 }

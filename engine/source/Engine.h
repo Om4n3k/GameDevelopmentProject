@@ -5,9 +5,11 @@
 #include "graphics/GraphicsApi.h"
 #include "GLFW/glfw3.h"
 #include "input/InputManager.h"
+#include "io/FileSystem.h"
 #include "render/RenderQueue.h"
 
 namespace eng {
+    class FileSystem;
     class Scene;
     class Application;
 }
@@ -32,6 +34,7 @@ namespace eng {
         InputManager& GetInputManager();
         GraphicsApi& GetGraphicsApi();
         RenderQueue& GetRenderQueue();
+        FileSystem& GetFileSystem();
 
         void SetCurrentScene(Scene* scene);
         Scene* GetCurrentScene() const;
@@ -42,6 +45,7 @@ namespace eng {
         InputManager m_InputManager;
         GraphicsApi m_GraphicsApi;
         RenderQueue m_RenderQueue;
+        FileSystem m_FileSystem;
         std::unique_ptr<Scene> m_CurrentScene;
     };
 }
