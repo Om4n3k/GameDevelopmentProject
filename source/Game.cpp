@@ -8,9 +8,6 @@
 #include "scene/components/PlayerControllerComponent.h"
 
 bool Game::Init() {
-    auto& fs = eng::Engine::GetInstance().GetFileSystem();
-    auto texture = eng::Texture::Load("brick.png");
-
     m_Scene = new eng::Scene();
 
     auto camera = m_Scene->CreateObject("Camera");
@@ -116,7 +113,7 @@ bool Game::Init() {
 
     auto objectA = m_Scene->CreateObject("Object A");
     objectA->AddComponent(new eng::MeshComponent(material, mesh));
-    objectA->SetPosition(glm::vec3(0.0f, 2.0f, 0.0f));
+    objectA->SetPosition(glm::vec3(1.0f, 0.0f, 5.0f));
 
     auto objectB = m_Scene->CreateObject("Object B");
     objectB->AddComponent(new eng::MeshComponent(material, mesh));
@@ -128,6 +125,12 @@ bool Game::Init() {
     objectC->SetPosition(glm::vec3(-2.0f, 0.0f, -2.0f));
     objectC->SetScale(glm::vec3(1.5f, 1.5f, 1.5f));
 
+    auto suzanneMesh = eng::Mesh::Load("models/Suzanne.gltf");
+    auto suzanneMaterial = eng::Material::Load("materials/suzanne.json");
+
+    auto suzanneObject = m_Scene->CreateObject("Suzanne");
+    suzanneObject->AddComponent(new eng::MeshComponent(suzanneMaterial, suzanneMesh));
+    suzanneObject->SetPosition(glm::vec3(0.0f, 0.0f, -5.0f));
 
     eng::Engine::GetInstance().SetCurrentScene(m_Scene);
     return true;

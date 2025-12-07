@@ -4,6 +4,8 @@
 
 #include "Material.h"
 
+#include <iostream>
+
 #include "Engine.h"
 #include "graphics/ShaderProgram.h"
 #include "graphics/Texture.h"
@@ -52,7 +54,7 @@ namespace eng {
 
     std::shared_ptr<Material> Material::Load(const std::string &path) {
         auto& fs = Engine::GetInstance().GetFileSystem();
-        auto contents = fs.LoadAssetFileText("materials/brick.json");
+        auto contents = fs.LoadAssetFileText(path);
         if (contents.empty()) return nullptr;
 
         nlohmann::json json = nlohmann::json::parse(contents);
@@ -98,6 +100,8 @@ namespace eng {
                 for (auto& p : paramsObj["textures"]) {
                     std::string name = p.value("name", "");
                     std::string txtPath = p.value("path", "");
+
+                    std::cout << "Loading texture: " << txtPath << " for path: " << path << std::endl;
 
                     auto texture = Texture::Load(txtPath);
                     result->SetParam(name, texture);

@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include <memory>
 #include <GL/glew.h>
 #include "graphics/VertexLayout.h"
 
@@ -17,6 +18,8 @@ namespace eng {
 
         void Bind();
         void Draw();
+
+        static std::shared_ptr<Mesh> Load(const std::string& path);
     private:
         VertexLayout m_VertexLayout;
         size_t m_VertexCount = 0;
