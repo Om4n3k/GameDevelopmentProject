@@ -70,6 +70,8 @@ include_directories(thirdparty/glm-1.0.1)
 include_directories(thirdparty/stb_image)
 # Add json library
 include_directories(thirdparty/json)
+# Add cgltf library
+include_directories(thirdparty/cgltf)
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_BINARY_DIR})
 
