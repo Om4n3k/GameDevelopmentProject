@@ -4,28 +4,15 @@
 
 #include "Game.h"
 #include "TestObject.h"
+#include "graphics/Texture.h"
 #include "scene/components/PlayerControllerComponent.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include <iostream>
-#include <stb_image.h>
-
-#include "graphics/Texture.h"
-
 bool Game::Init() {
-    auto &fs = eng::Engine::GetInstance().GetFileSystem();
-    auto path = fs.GetAssetsFolder() / "brick.png";
-
-    int width, height, channels;
-    unsigned char *data = stbi_load(path.string().c_str(), &width, &height, &channels, 0);
-    std::shared_ptr<eng::Texture> texture;
-    if (data) {
-        texture = std::make_shared<eng::Texture>(width, height, channels, data);
-        std::cout << "Image data loaded successfully!" << std::endl;
-        stbi_image_free(data);
-    }
+    auto& fs = eng::Engine::GetInstance().GetFileSystem();
+    auto texture = eng::Texture::Load("brick.png");
 
     m_Scene = new eng::Scene();
+
     auto camera = m_Scene->CreateObject("Camera");
     camera->AddComponent(new eng::CameraComponent());
     camera->SetPosition(glm::vec3(0.0f, 0.0f, 2.0f));
@@ -34,44 +21,11 @@ bool Game::Init() {
     m_Scene->SetMainCamera(camera);
     m_Scene->CreateObject<TestObject>("TestObject");
 
-
-    std::string vertexShaderSource = R"(
-        #version 330 core
-        layout (location = 0) in vec3 aPos;
-        layout (location = 1) in vec3 aColor;
-        layout (location = 2) in vec2 uV;
-
-        out vec3 vColor;
-        out vec2 vUV;
-
-        uniform mat4 uModel;
-        uniform mat4 uView;
-        uniform mat4 uProjection;
-
-        void main() {
-            vColor = aColor;
-            vUV = uV;
-            gl_Position = uProjection * uView * uModel * vec4(aPos, 1.0);
-        }
-    )";
-
-    std::string fragmentShaderSource = R"(
-        #version 330 core
-        out vec4 FragColor;
-
-        in vec3 vColor;
-        in vec2 vUV;
-
-        uniform sampler2D brickTxt;
-
-        void main() {
-            vec4 texColor = texture(brickTxt, vUV);
-            FragColor = texColor * vec4(vColor, 1.0);
-        }
-    )";
+    const std::string vertexShaderSource = fs.LoadAssetFileText("shaders/vertex.glsl");
+    const std::string fragmentShaderSource = fs.LoadAssetFileText("shaders/fragment.glsl");
 
     auto &graphicsApi = eng::Engine::GetInstance().GetGraphicsApi();
-    auto shaderProgram = graphicsApi.CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
+    const auto shaderProgram = graphicsApi.CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
 
     std::vector<float> cubeVertices = {
         // Front face
