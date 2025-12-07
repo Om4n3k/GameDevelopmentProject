@@ -68,6 +68,8 @@ include_directories(thirdparty/glm-1.0.1)
 
 # Add stb_image library
 include_directories(thirdparty/stb_image)
+# Add json library
+include_directories(thirdparty/json)
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_BINARY_DIR})
 

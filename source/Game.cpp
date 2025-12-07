@@ -21,11 +21,7 @@ bool Game::Init() {
     m_Scene->SetMainCamera(camera);
     m_Scene->CreateObject<TestObject>("TestObject");
 
-    const std::string vertexShaderSource = fs.LoadAssetFileText("shaders/vertex.glsl");
-    const std::string fragmentShaderSource = fs.LoadAssetFileText("shaders/fragment.glsl");
-
-    auto &graphicsApi = eng::Engine::GetInstance().GetGraphicsApi();
-    const auto shaderProgram = graphicsApi.CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
+    auto material = eng::Material::Load("materials/brick.json");
 
     std::vector<float> cubeVertices = {
         // Front face
@@ -112,15 +108,11 @@ bool Game::Init() {
     });
     vertexLayout.stride = sizeof(float) * 8;
 
-    auto material = std::make_shared<eng::Material>();
     auto mesh = std::make_shared<eng::Mesh>(
         vertexLayout,
         cubeVertices,
         indicies
     );
-
-    material->SetShaderProgram(shaderProgram);
-    material->SetParam("brickTxt", texture);
 
     auto objectA = m_Scene->CreateObject("Object A");
     objectA->AddComponent(new eng::MeshComponent(material, mesh));
