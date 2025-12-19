@@ -6,6 +6,8 @@
 #include <vector>
 #include <string>
 #include <memory>
+
+#include "Common.h"
 #include "GameObject.h"
 
 namespace eng {
@@ -29,6 +31,10 @@ namespace eng {
 
         void SetMainCamera(GameObject* camera);
         GameObject* GetMainCamera() const;
+
+        std::vector<LightData> CollectLights();
+    private:
+        void CollectLightsRecursive(GameObject* obj, std::vector<LightData>& out);
     private:
         std::vector<std::unique_ptr<GameObject>> m_GameObjects;
         GameObject* m_MainCamera = nullptr;

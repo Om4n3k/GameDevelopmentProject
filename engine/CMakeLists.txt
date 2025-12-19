@@ -46,6 +46,9 @@ set(PROJECT_SOURCE_FILES
 		source/io/FileSystem.h
 		source/graphics/Texture.cpp
 		source/graphics/Texture.h
+		source/scene/components/LightComponent.cpp
+		source/scene/components/LightComponent.h
+		source/Common.h
 )
 
 include_directories(source)

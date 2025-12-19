@@ -12,13 +12,18 @@ namespace eng {
         m_Commands.push_back(command);
     }
 
-    void RenderQueue::Draw(GraphicsApi &graphicsApi, const CameraData &cameraData) {
+    void RenderQueue::Draw(GraphicsApi &graphicsApi, const CameraData &cameraData, const std::vector<LightData> &lights) {
         for (auto& command : m_Commands) {
             graphicsApi.BindMaterial(command.material);
             auto shaderProgram = command.material->GetShaderProgram();
             shaderProgram->SetUniform("uModel", command.modelMatrix);
             shaderProgram->SetUniform("uView", cameraData.viewMatrix);
             shaderProgram->SetUniform("uProjection", cameraData.projectionMatrix);
+            if (!lights.empty()) {
+                auto& light = lights[0];
+                shaderProgram->SetUniform("uLight.color", light.color);
+                shaderProgram->SetUniform("uLight.position", light.position);
+            }
             graphicsApi.BindMesh(command.mesh);
             graphicsApi.DrawMesh(command.mesh);
         }

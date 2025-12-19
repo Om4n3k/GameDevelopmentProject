@@ -5,6 +5,8 @@
 #include <vector>
 #include <glm/mat4x4.hpp>
 
+#include "Common.h"
+
 namespace eng {
     class Mesh;
     class Material;
@@ -16,15 +18,12 @@ namespace eng {
         glm::mat4 modelMatrix = glm::mat4(1.0f);
     };
 
-    struct CameraData {
-        glm::mat4 viewMatrix;
-        glm::mat4 projectionMatrix;
-    };
+
 
     class RenderQueue {
     public:
         void Submit(const RenderCommand &command);
-        void Draw(GraphicsApi& graphicsApi, const CameraData& cameraData);
+        void Draw(GraphicsApi& graphicsApi, const CameraData& cameraData, const std::vector<LightData> &lights);
 
     private:
         std::vector<RenderCommand> m_Commands;

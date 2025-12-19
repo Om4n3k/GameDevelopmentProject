@@ -38,7 +38,9 @@ namespace eng {
         }
 
         glm::vec3 GetPosition() const;
+        glm::vec3 GetWorldPosition() const;
         void SetPosition(const glm::vec3& position);
+
         glm::quat GetRotation() const;
         void SetRotation(const glm::quat& rotation);
         glm::vec3 GetScale() const;

@@ -6,6 +6,8 @@
 
 #include <algorithm>
 
+#include "components/LightComponent.h"
+
 namespace eng {
     void Scene::Update(float deltaTime) {
         for (auto it = m_GameObjects.begin(); it != m_GameObjects.end();) {
@@ -132,5 +134,26 @@ namespace eng {
 
     GameObject * Scene::GetMainCamera() const {
         return m_MainCamera;
+    }
+
+    std::vector<LightData> Scene::CollectLights() {
+        std::vector<LightData> lights;
+        for (auto& obj : m_GameObjects) {
+            CollectLightsRecursive(obj.get(), lights);
+        }
+        return lights;
+    }
+
+    void Scene::CollectLightsRecursive(GameObject *obj, std::vector<LightData> &out) {
+        if (const auto light = obj->GetComponent<LightComponent>()) {
+            LightData data{};
+            data.color = light->GetColor();
+            data.position = obj->GetWorldPosition();
+            out.push_back(data);
+        }
+
+        for (auto& child : obj->m_Children) {
+            CollectLightsRecursive(child.get(), out);
+        }
     }
 } // eng

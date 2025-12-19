@@ -93,6 +93,8 @@ namespace eng {
 
             // Prepare camera data
             CameraData cameraData{};
+            std::vector<LightData> lights;
+
             int width, height;
             glfwGetWindowSize(m_Window, &width, &height);
             float aspect = static_cast<float>(width) / static_cast<float>(height);
@@ -104,9 +106,11 @@ namespace eng {
                         cameraData.projectionMatrix = cameraComponent->GetProjectionMatrix(aspect);
                     }
                 }
+
+                lights = m_CurrentScene->CollectLights();
             }
 
-            m_RenderQueue.Draw(m_GraphicsApi, cameraData);
+            m_RenderQueue.Draw(m_GraphicsApi, cameraData, lights);
 
             glm::vec2 lastMousePos = m_InputManager.GetMousePosition();
             m_InputManager.SetMousePositionLastFrame(lastMousePos.x, lastMousePos.y);
