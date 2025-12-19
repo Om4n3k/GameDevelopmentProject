@@ -24,6 +24,7 @@ namespace eng {
             auto obj = new T();
             obj->SetName(name);
             SetParent(obj, parent);
+            obj->m_Scene = this;
             return obj;
         }
 

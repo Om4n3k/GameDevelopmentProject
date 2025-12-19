@@ -16,12 +16,15 @@ namespace eng {
     class Scene;
     class GameObject {
     public:
+        static GameObject* LoadGLTF(const std::string& path, const std::string& name);
+    public:
         virtual ~GameObject() = default;
         virtual void Update(float deltaTime);
         const std::string& GetName();
         void SetName(const std::string& name);
         GameObject* GetParent() const;
-        void SetParent(GameObject* parent);
+        Scene* GetScene() const;
+        bool SetParent(GameObject* parent);
         bool IsAlive() const;
         void MarkForDestroy();
 
@@ -53,6 +56,7 @@ namespace eng {
     private:
         std::string m_Name;
         GameObject* m_Parent = nullptr;
+        Scene* m_Scene = nullptr;
         std::vector<std::unique_ptr<GameObject>> m_Children;
         std::vector<std::unique_ptr<Component>> m_Components;
         bool m_IsAlive = true;
